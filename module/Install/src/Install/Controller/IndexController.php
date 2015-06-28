@@ -10,6 +10,8 @@
 namespace Install\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Install\Form\InstallForm;
+use Zend\Db\Adapter\Adapter;
 
 class IndexController extends AbstractActionController
 {
@@ -20,7 +22,25 @@ class IndexController extends AbstractActionController
         
         $headTitle->append($translator->translate('Installing The UserHub System'));
         
-        return array();
+        $form = new InstallForm();
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            
+            // Test the account by form submited.
+            $adapter = new Adapter(array(
+                'driver' => 'Mysqli',
+                'database' => 'userhub',
+                'username' => 'root',
+                'password' => 'abc123'
+            ));
+            
+            $adapter->query('use userhub');
+            
+        }
+        
+        return array('form'=>$form);
     }
 
     public function fooAction()
