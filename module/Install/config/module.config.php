@@ -2,21 +2,21 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Workbench\Controller\Session' => 'Workbench\Controller\SessionController',
+            'Install\Controller\Index' => 'Install\Controller\IndexController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'workbench' => array(
+            'install' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/workbench',
+                    'route'    => '/install',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
-                        '__NAMESPACE__' => 'Workbench\Controller',
-                        'controller'    => 'Session',
+                        '__NAMESPACE__' => 'Install\Controller',
+                        'controller'    => 'Index',
                         'action'        => 'index',
                     ),
                 ),
@@ -44,7 +44,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'Workbench' => __DIR__ . '/../view',
+            'Install' => __DIR__ . '/../view',
         ),
     ),
 );

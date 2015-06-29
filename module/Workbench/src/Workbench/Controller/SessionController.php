@@ -24,4 +24,15 @@ class SessionController extends AbstractActionController
         // are working when you browse to /session/session/foo
         return array();
     }
+    
+    public function loginAction() {
+        ;
+    }
+    
+    public function logoutAction() {
+        // 删除session数据，然后跳转到登录界面
+        
+        echo '=========';
+        $this->redirect('login');
+    }
 }

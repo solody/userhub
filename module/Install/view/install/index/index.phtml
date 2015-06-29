@@ -1,0 +1,16 @@
+<h4>Welcome to install UserHub</h4>
+
+<?php
+
+$form->setAttribute('action', $this->url('install', array('action' => 'add')));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+
+<div><?php echo $this->formRow($form->get('server')); ?></div>
+<div><?php echo $this->formRow($form->get('username')); ?></div>
+<div><?php echo $this->formRow($form->get('password')); ?></div>
+<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+<?php echo $this->form()->closeTag(); ?>
