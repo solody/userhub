@@ -12,6 +12,9 @@ namespace Install\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Install\Form\InstallForm;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Adapter\Exception\RuntimeException as AdapterRuntimeException;
+use Install\Model\DB;
+
 
 class IndexController extends AbstractActionController
 {
@@ -26,17 +29,29 @@ class IndexController extends AbstractActionController
         
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData($request->getPost());
+            
+            $post_data = $request->getPost();
+            
+            $form->setData($post_data);
             
             // Test the account by form submited.
-            $adapter = new Adapter(array(
-                'driver' => 'Mysqli',
-                'database' => 'userhub',
-                'username' => 'root',
-                'password' => 'abc123'
-            ));
-            
-            $adapter->query('use userhub');
+            try {
+
+                $adapter = new Adapter(array(
+                    'driver' => 'Mysqli',
+                    'hostname'=>$post_data->server,
+                    'username' => $post_data->username,
+                    'password' => $post_data->password
+                ));
+                
+                if (empty($post_data->database)) throw new \Exception($translator->translate('Database name has not spacify!'));
+                
+                $db = new DB($adapter, $post_data->database);
+                $db->install();
+                
+            } catch (AdapterRuntimeException $e) {
+                print($e->getMessage());
+            }
             
         }
         
