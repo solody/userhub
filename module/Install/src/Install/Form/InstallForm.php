@@ -14,33 +14,25 @@ class InstallForm extends Form
      $this->add(array(
          'name' => 'server',
          'type' => 'Text',
-         'options' => array(
-             'label' => 'Server',
-         ),
      ));
      $this->add(array(
          'name' => 'username',
          'type' => 'Text',
-         'options' => array(
-             'label' => 'Username',
-         ),
      ));
 
      $this->add(array(
          'name' => 'password',
          'type' => 'Text',
-         'options' => array(
-             'label' => 'Password',
-         ),
+     ));
+     
+     $this->add(array(
+         'name' => 'database',
+         'type' => 'Text',
      ));
      
      $this->add(array(
          'name' => 'submit',
          'type' => 'Submit',
-         'attributes' => array(
-             'value' => 'Install Now !',
-             'id' => 'submitbutton',
-         ),
      ));
  }
 }
