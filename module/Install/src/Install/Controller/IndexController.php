@@ -36,17 +36,16 @@ class IndexController extends AbstractActionController
             
             // Test the account by form submited.
             try {
-
-                $adapter = new Adapter(array(
-                    'driver' => 'Mysqli',
-                    'hostname'=>$post_data->server,
-                    'username' => $post_data->username,
-                    'password' => $post_data->password
-                ));
                 
                 if (empty($post_data->database)) throw new \Exception($translator->translate('Database name has not spacify!'));
                 
-                $db = new DB($adapter, $post_data->database);
+                $db = @new DB(array(
+                    'driver' => 'Mysqli',
+                    'hostname'=>$post_data->server,
+                    'username' => $post_data->username,
+                    'password' => $post_data->password,
+                    'database' => $post_data->database
+                ));
                 $db->install();
                 
             } catch (AdapterRuntimeException $e) {

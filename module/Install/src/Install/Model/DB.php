@@ -5,15 +5,23 @@
 namespace Install\Model;
 use Zend\Db\Metadata\Metadata;
 use Zend\Db\Adapter\Adapter;
+use Zend\Config\Config;
+
 
 class DB extends Metadata
 {
-    public $name = NULL;
+    public $config = NULL;
 
-    function __construct(Adapter $adapter, $name)
+    function __construct($config)
     {
-        parent::__construct($adapter);
-        $this->name = $name;
+        $this->config = $config;
+        parent::__construct(new Adapter(array(
+            'driver' => $config['driver'],
+            'hostname'=>$config['hostname'],
+            'username' => $config['username'],
+            'password' => $config['password'],
+        )));
+        
     }
     
     /**
@@ -32,16 +40,32 @@ class DB extends Metadata
         // Try to create a database named by $post_data->database
         try {
         
-            $createDatabse_stament = $this->adapter->createStatement('CREATE DATABASE IF NOT EXISTS `'.$this->name.'` CHARACTER SET = utf8 COLLATE = utf8_general_ci');
+            $createDatabse_stament = $this->adapter->createStatement('CREATE DATABASE IF NOT EXISTS `'.$this->config['database'].'` CHARACTER SET = utf8 COLLATE = utf8_general_ci');
             $rs = $createDatabse_stament->execute();
+            
+            parent::__construct(new Adapter($this->config));
+            
+            if ( $this->adapter->getCurrentSchema() == $this->config['database'] ){
+                
+                $local_db_config = new Config(array('db'=>$this->config), true);
+                $writer = new \Zend\Config\Writer\PhpArray();
+                $writer->toFile('config/autoload/local.php', $local_db_config);
+                
+            }
         
         } catch (\Exception $e) {
             throw $e;
         }
+        
+        
+    }
+    
+    private function generateConfigFile(){
+        
     }
     
     private function create_tables() {
-        ;
+        echo $this->adapter->getCurrentSchema();
     }
 }
 
