@@ -1,15 +1,13 @@
 {
-    "name": "solody/userhub",
-    "description": "A web application for user manager.",
-    "authors": [
-        {
-            "name": "Kent",
-            "email": "12943125@qq.com"
-        }
-    ],
-    "minimum-stability": "beta",
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "~2.4"
-    }
+  "name" : "solody/userhub",
+  "description" : "A web application for user manager.",
+  "require" : {
+    "php" : ">=5.3.3",
+    "zendframework/zendframework" : "~2.5.1"
+  },
+  "minimum-stability" : "beta",
+  "authors" : [ {
+    "name" : "Kent",
+    "email" : "12943125@qq.com"
+  } ]
 }
